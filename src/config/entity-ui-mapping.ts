@@ -294,6 +294,9 @@ export const DOCK_SETTINGS_SECTION: SectionDefinition = {
   entities: [
     sw('SELF_CLEAN', 'settings.dock.self_clean', 'settings.dock.self_clean_desc', { capability: CAP.SELF_WASH_BASE }),
     sel('AUTO_EMPTY_MODE', 'settings.dock.auto_empty_mode', 'settings.dock.auto_empty_mode_desc', {
+      capability: CAP.AUTO_EMPTY_MODE,
+    }),
+    sel('AUTO_EMPTY_FREQUENCY', 'settings.dock.auto_empty_frequency', 'settings.dock.auto_empty_frequency_desc', {
       capability: CAP.AUTO_EMPTY_BASE,
     }),
     sw('AUTO_ADD_DETERGENT', 'settings.dock.auto_detergent', 'settings.dock.auto_detergent_desc', {
@@ -301,6 +304,9 @@ export const DOCK_SETTINGS_SECTION: SectionDefinition = {
     }),
     sw('SMART_MOP_WASHING', 'settings.dock.smart_washing', 'settings.dock.smart_washing_desc', {
       capability: CAP.SMART_MOP_WASHING,
+    }),
+    sel('MOP_WASH_LEVEL', 'settings.dock.mop_wash_level', 'settings.dock.mop_wash_level_desc', {
+      capability: CAP.SELF_WASH_BASE,
     }),
     sel('WASHING_MODE', 'settings.dock.washing_mode', 'settings.dock.washing_mode_desc', {
       capability: CAP.WASHING_MODE,
