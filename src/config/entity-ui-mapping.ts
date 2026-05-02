@@ -227,6 +227,8 @@ export const CARPET_SETTINGS_SECTION: SectionDefinition = {
   order: 3,
   capabilities: [CAP.CARPET_RECOGNITION],
   entities: [
+    sw('CARPET_RECOGNITION', 'settings.carpet.carpet_recognition', 'settings.carpet.carpet_recognition_desc'),
+    sw('CARPET_AVOIDANCE', 'settings.carpet.carpet_avoidance', 'settings.carpet.carpet_avoidance_desc'),
     sel('CARPET_CLEANING', 'settings.carpet.cleaning_mode', 'settings.carpet.cleaning_mode_desc'),
     sw('CLEAN_CARPETS_FIRST', 'settings.carpet.clean_carpets_first', 'settings.carpet.clean_carpets_first_desc'),
     sw('CARPET_BOOST', 'settings.carpet.carpet_boost', 'settings.carpet.carpet_boost_desc'),
@@ -252,6 +254,7 @@ export const FLOOR_SETTINGS_SECTION: SectionDefinition = {
       'settings.floor.floor_direction_cleaning_desc'
     ),
     sw('LARGE_PARTICLES_BOOST', 'settings.floor.large_particles_boost', 'settings.floor.large_particles_boost_desc'),
+    sw('PET_FOCUSED_CLEANING', 'settings.floor.pet_focused_cleaning', 'settings.floor.pet_focused_cleaning_desc'),
     sel('AUTO_RECLEANING', 'settings.floor.auto_recleaning', 'settings.floor.auto_recleaning_desc'),
   ],
 };
@@ -314,6 +317,9 @@ export const DOCK_SETTINGS_SECTION: SectionDefinition = {
   ],
   entities: [
     sw('SELF_CLEAN', 'settings.dock.self_clean', 'settings.dock.self_clean_desc', { capability: CAP.SELF_WASH_BASE }),
+    sw('AUTO_DUST_COLLECTING', 'settings.dock.auto_dust_collecting', 'settings.dock.auto_dust_collecting_desc', {
+      capability: CAP.AUTO_EMPTY_BASE,
+    }),
     sel('AUTO_EMPTY_MODE', 'settings.dock.auto_empty_mode', 'settings.dock.auto_empty_mode_desc', {
       capability: CAP.AUTO_EMPTY_MODE,
     }),
@@ -323,6 +329,19 @@ export const DOCK_SETTINGS_SECTION: SectionDefinition = {
     sw('AUTO_ADD_DETERGENT', 'settings.dock.auto_detergent', 'settings.dock.auto_detergent_desc', {
       capability: CAP.AUTO_ADD_DETERGENT,
     }),
+    sw(
+      'MOP_WASHING_WITH_DETERGENT',
+      'settings.dock.mop_washing_with_detergent',
+      'settings.dock.mop_washing_with_detergent_desc',
+      {
+        capability: CAP.AUTO_ADD_DETERGENT,
+      }
+    ),
+    sw('MOPPING_WITH_DETERGENT', 'settings.dock.mopping_with_detergent', 'settings.dock.mopping_with_detergent_desc'),
+    sw('WATER_ELECTROLYSIS', 'settings.dock.water_electrolysis', 'settings.dock.water_electrolysis_desc', {
+      capability: CAP.SELF_WASH_BASE,
+    }),
+    sw('AUTO_WATER_REFILLING', 'settings.dock.auto_water_refilling', 'settings.dock.auto_water_refilling_desc'),
     sw('SMART_MOP_WASHING', 'settings.dock.smart_washing', 'settings.dock.smart_washing_desc', {
       capability: CAP.SMART_MOP_WASHING,
     }),
@@ -397,6 +416,7 @@ export const AI_DETECTION_SECTION: SectionDefinition = {
       'settings.ai_detection.ai_obstacle_picture_desc'
     ),
     sw('AI_PET_DETECTION', 'settings.ai_detection.ai_pet_detection', 'settings.ai_detection.ai_pet_detection_desc'),
+    sw('AI_PET_AVOIDANCE', 'settings.ai_detection.ai_pet_avoidance', 'settings.ai_detection.ai_pet_avoidance_desc'),
     sw(
       'PET_FOCUSED_DETECTION',
       'settings.ai_detection.pet_focused_detection',
