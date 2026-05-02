@@ -13,6 +13,7 @@ export interface VacuumEntityIds {
   cleangeniusMode: string;
   cleangenius: string;
   suctionLevel: string;
+  waterVolume: string;
   cleaningRoute: string;
   maxSuctionPower: string;
   wetnessLevel: string;
@@ -32,6 +33,7 @@ export function useVacuumEntityIds(vacuumEntityId: string): VacuumEntityIds {
       cleangeniusMode: buildEntityId('select', baseEntityId, DREAME_SELECTS.CLEANGENIUS_MODE.key),
       cleangenius: buildEntityId('select', baseEntityId, DREAME_SELECTS.CLEANGENIUS.key),
       suctionLevel: buildEntityId('select', baseEntityId, DREAME_SELECTS.SUCTION_LEVEL.key),
+      waterVolume: buildEntityId('select', baseEntityId, DREAME_SELECTS.WATER_VOLUME.key),
       cleaningRoute: buildEntityId('select', baseEntityId, DREAME_SELECTS.CLEANING_ROUTE.key),
       maxSuctionPower: buildEntityId('switch', baseEntityId, DREAME_SWITCHES.MAX_SUCTION_POWER.key),
       wetnessLevel: buildEntityId('number', baseEntityId, DREAME_NUMBERS.WETNESS_LEVEL.key),

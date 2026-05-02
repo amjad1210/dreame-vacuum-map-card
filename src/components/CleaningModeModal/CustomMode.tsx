@@ -7,6 +7,7 @@ import {
   CleaningModeSelector,
   SuctionPowerSelector,
   WetnessSlider,
+  WaterVolumeSelector,
   MopWashingFrequency,
   RouteSelector,
 } from './components';
@@ -18,6 +19,8 @@ interface CustomModeProps {
   suctionLevelList: string[];
   wetnessLevel: number;
   mopPadHumidity: string;
+  waterVolume: string;
+  waterVolumeList: string[];
   cleaningRoute: string;
   cleaningRouteList: string[];
   maxSuctionPower: boolean;
@@ -41,6 +44,8 @@ export function CustomMode({
   suctionLevelList,
   wetnessLevel,
   mopPadHumidity,
+  waterVolume,
+  waterVolumeList,
   cleaningRoute,
   cleaningRouteList,
   maxSuctionPower,
@@ -68,6 +73,8 @@ export function CustomMode({
   const hasWetnessLevel = capabilities.has(CAPABILITY.WETNESS_LEVEL);
   const hasSelfCleanFrequency = capabilities.has(CAPABILITY.SELF_CLEAN_FREQUENCY);
   const hasCleaningRoute = capabilities.has(CAPABILITY.CLEANING_ROUTE);
+  const hasSelfWashBase = capabilities.has(CAPABILITY.SELF_WASH_BASE);
+  const hasWaterVolume = !hasWetnessLevel && !hasSelfWashBase && waterVolumeList.length > 0;
 
   const cleaningModeState = getEntityState(hass, entityIds.cleaningMode);
   const isInCleaningSession = phase === 'cleaning' || phase === 'paused';
@@ -129,6 +136,20 @@ export function CustomMode({
               hideMaxPower={!hasMaxSuctionPower}
             />
           </section>
+
+          {hasWaterVolume && cleaningMode !== CLEANING_MODE.SWEEPING && (
+            <section className="cleaning-mode-modal__section">
+              <h3 className="cleaning-mode-modal__section-title">{t('custom_mode.water_volume_title')}</h3>
+              <WaterVolumeSelector
+                waterVolume={waterVolume}
+                waterVolumeList={waterVolumeList}
+                onSelect={setSelectOption}
+                entityId={entityIds.waterVolume}
+                t={t}
+                disabled={!controls.canChangeWetness}
+              />
+            </section>
+          )}
 
           {hasWetnessLevel && cleaningMode !== CLEANING_MODE.SWEEPING && (
             <section className="cleaning-mode-modal__section">

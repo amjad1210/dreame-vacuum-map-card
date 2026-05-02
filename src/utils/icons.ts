@@ -9,6 +9,7 @@ import {
   SUCTION_LEVEL,
   CLEANING_ROUTE,
   SELF_CLEAN_FREQUENCY,
+  WATER_VOLUME,
   VACUUM_ICON_SVG,
   MOP_ICON_SVG,
   VACUUM_MOP_ICON_SVG,
@@ -26,6 +27,7 @@ import {
   MOP_WASHING_FREQUENCY_BY_TIME_ICON_SVG,
   MOP_WASHING_FREQUENCY_BY_ROOM_ICON_SVG,
   CUSTOMIZE_ICON_SVG,
+  WATER_VOLUME_ICON_SVG,
 } from '@/constants';
 import type {
   VacuumCleaningMode,
@@ -33,6 +35,7 @@ import type {
   SuctionLevel,
   CleaningRoute,
   SelfCleanFrequency,
+  WaterVolume,
 } from '@/types/vacuum';
 
 export function getCleaningModeIcon(mode: VacuumCleaningMode): ReactElement | string {
@@ -101,4 +104,27 @@ export function getSelfCleanFrequencyIcon(frequency: SelfCleanFrequency): ReactE
     default:
       return '⚙️';
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getWaterVolumeIcon(_: WaterVolume): ReactElement {
+  return WATER_VOLUME_ICON_SVG;
+}
+
+type TranslateFunction = (key: string, params?: Record<string, string | number>) => string;
+
+export function getWaterVolumeFriendlyName(level: WaterVolume, t?: TranslateFunction): string {
+  if (t) {
+    switch (level) {
+      case WATER_VOLUME.LOW:
+        return t('custom_mode.water_low');
+      case WATER_VOLUME.MEDIUM:
+        return t('custom_mode.water_medium');
+      case WATER_VOLUME.HIGH:
+        return t('custom_mode.water_high');
+      default:
+        return level;
+    }
+  }
+  return level;
 }

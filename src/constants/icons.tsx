@@ -118,3 +118,6 @@ export const CLEANING_ROUTE_DEEP_ICON_SVG = <WavesArrowDown />;
 
 // Customize mode icon
 export const CUSTOMIZE_ICON_SVG = <SlidersHorizontal />;
+
+// Water volume icon (same for all levels - selection highlight indicates state)
+export const WATER_VOLUME_ICON_SVG = <Droplet />;

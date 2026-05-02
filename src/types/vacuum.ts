@@ -9,6 +9,7 @@ import type {
   SUCTION_LEVEL,
   CLEANING_ROUTE,
   MOP_PAD_HUMIDITY,
+  WATER_VOLUME,
   VACUUM_MODE_TYPE,
   SELF_CLEAN_FREQUENCY,
 } from '@/constants';
@@ -19,6 +20,7 @@ export type CleanGeniusState = (typeof CLEANGENIUS_STATE)[keyof typeof CLEANGENI
 export type SuctionLevel = (typeof SUCTION_LEVEL)[keyof typeof SUCTION_LEVEL];
 export type CleaningRoute = (typeof CLEANING_ROUTE)[keyof typeof CLEANING_ROUTE];
 export type MopPadHumidity = (typeof MOP_PAD_HUMIDITY)[keyof typeof MOP_PAD_HUMIDITY];
+export type WaterVolume = (typeof WATER_VOLUME)[keyof typeof WATER_VOLUME];
 export type VacuumModeType = (typeof VACUUM_MODE_TYPE)[keyof typeof VACUUM_MODE_TYPE];
 export type SelfCleanFrequency = (typeof SELF_CLEAN_FREQUENCY)[keyof typeof SELF_CLEAN_FREQUENCY];
 

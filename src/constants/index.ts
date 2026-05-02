@@ -139,6 +139,13 @@ export const MOP_PAD_HUMIDITY = {
   WET: 'Wet',
 } as const;
 
+// Water volume levels (for older vacuums without self-wash base)
+export const WATER_VOLUME = {
+  LOW: 'Low',
+  MEDIUM: 'Medium',
+  HIGH: 'High',
+} as const;
+
 // Mode types (for vacuum commands)
 export const VACUUM_MODE_TYPE = {
   ALL: 'all',
@@ -208,6 +215,7 @@ export const DEFAULTS = {
   SELF_CLEAN_AREA: 20,
   SELF_CLEAN_FREQUENCY: SELF_CLEAN_FREQUENCY.BY_AREA,
   MOP_PAD_HUMIDITY: MOP_PAD_HUMIDITY.MOIST,
+  WATER_VOLUME: WATER_VOLUME.MEDIUM,
   SELF_CLEAN_AREA_MIN: 10,
   SELF_CLEAN_AREA_MAX: 35,
   SELF_CLEAN_TIME: 25,

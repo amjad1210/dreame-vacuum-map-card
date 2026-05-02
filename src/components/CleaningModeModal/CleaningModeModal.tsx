@@ -58,6 +58,7 @@ export function CleaningModeModal({ opened, onClose }: CleaningModeModalProps) {
   const cleangeniusMode = getAttr(entity.attributes.cleangenius_mode, DEFAULTS.CLEANGENIUS_MODE);
   const suctionLevel = getAttr(entity.attributes.suction_level, DEFAULTS.SUCTION_LEVEL);
   const wetnessLevel = getAttr(entity.attributes.wetness_level, DEFAULTS.WETNESS_LEVEL);
+  const waterVolume = getAttr(entity.attributes.water_volume, DEFAULTS.WATER_VOLUME);
   const cleaningRoute = getAttr(entity.attributes.cleaning_route, DEFAULTS.CLEANING_ROUTE);
   const maxSuctionPower = getAttr(entity.attributes.max_suction_power, DEFAULTS.MAX_SUCTION_POWER);
   const selfCleanArea = getAttr(entity.attributes.self_clean_area, DEFAULTS.SELF_CLEAN_AREA);
@@ -91,6 +92,9 @@ export function CleaningModeModal({ opened, onClose }: CleaningModeModalProps) {
   const baseSuctionLevelList = getStringArrayAttr('suction_level_list', []);
   const suctionLevelList =
     baseSuctionLevelList.length > 0 ? baseSuctionLevelList : ['Quiet', 'Standard', 'Strong', 'Turbo'];
+
+  const baseWaterVolumeList = getStringArrayAttr('water_volume_list', []);
+  const waterVolumeList = baseWaterVolumeList.length > 0 ? baseWaterVolumeList : ['Low', 'Medium', 'High'];
 
   const baseCleaningRouteList = getStringArrayAttr('cleaning_route_list', []);
   const cleaningRouteList =
@@ -159,6 +163,8 @@ export function CleaningModeModal({ opened, onClose }: CleaningModeModalProps) {
                 suctionLevelList={suctionLevelList}
                 wetnessLevel={wetnessLevel}
                 mopPadHumidity={mopPadHumidity}
+                waterVolume={waterVolume}
+                waterVolumeList={waterVolumeList}
                 cleaningRoute={cleaningRoute}
                 cleaningRouteList={cleaningRouteList}
                 maxSuctionPower={maxSuctionPower}
