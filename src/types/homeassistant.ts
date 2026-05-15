@@ -50,6 +50,8 @@ export interface Room {
   y?: number;
 }
 
+export type MapOverlay = 'vacuum' | 'charger' | 'room_labels';
+
 export interface HassConfig {
   entity: string;
   map_entity?: string;
@@ -61,8 +63,7 @@ export interface HassConfig {
   default_mode?: CleaningSelectionMode;
   default_room_view?: RoomViewMode;
   buttons?: ButtonConfig[];
-  /** Show vacuum and charger position markers on the map (default: false, since map image already renders them) */
-  show_vacuum_position?: boolean;
+  map_overlays?: MapOverlay[];
 }
 
 export interface HassUnitSystem {

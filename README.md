@@ -92,6 +92,10 @@ theme: light # Optional, 'light' (default), 'dark', or 'custom'
 language: en # Optional, 'en' (default) or 'de'
 default_mode: all # Optional, 'all' (default), 'room', or 'zone'
 default_room_view: map # Optional, 'map' (default) or 'list'
+map_overlays: # Experimental Optional, list of overlays to show on the map
+  - room_labels # Show room names
+  - vacuum # Show vacuum position marker
+  - charger # Show charger position marker
 buttons: # Optional
   - type: stop # Only stop button is supported
     action: stop # 'stop' (default), 'stop_and_dock'

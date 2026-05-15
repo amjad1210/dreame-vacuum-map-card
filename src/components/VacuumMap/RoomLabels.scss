@@ -1,0 +1,19 @@
+.room-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 8;
+
+  &__bg {
+    fill: var(--room-label-bg, rgba(0, 0, 0, 0.7));
+  }
+
+  &__text {
+    fill: var(--room-label-color, #fff);
+    font-weight: 500;
+    font-family: inherit;
+  }
+}

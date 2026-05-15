@@ -17,6 +17,7 @@ import { RoomListView } from './RoomListView';
 import { ZoneOverlay } from './ZoneOverlay';
 import { VacuumPositionMarker } from './VacuumPositionMarker';
 import { ChargerMarker } from './ChargerMarker';
+import { RoomLabels } from './RoomLabels';
 import './VacuumMap.scss';
 
 interface VacuumMapProps {
@@ -143,13 +144,11 @@ export function VacuumMap({
   // Determine if vacuum is currently cleaning (not docked)
   const isCleaning = phase === 'cleaning';
 
-  // Only show position markers if explicitly enabled in config (default: false)
-  // The map image already renders robot/charger icons by default from the integration
-  const showPositionMarkers = config.show_vacuum_position === true;
-  const showVacuumMarker =
-    showPositionMarkers && vacuumPosition && imageDimensions.width > 0 && imageDimensions.height > 0;
-  const showChargerMarker =
-    showPositionMarkers && chargerPosition && imageDimensions.width > 0 && imageDimensions.height > 0;
+  const overlays = config.map_overlays ?? [];
+  const hasDimensions = imageDimensions.width > 0 && imageDimensions.height > 0;
+  const showVacuumMarker = overlays.includes('vacuum') && vacuumPosition && hasDimensions;
+  const showChargerMarker = overlays.includes('charger') && chargerPosition && hasDimensions;
+  const showRoomLabels = overlays.includes('room_labels') && hasDimensions;
 
   const handleImageLoad = useCallback(
     (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -224,7 +223,6 @@ export function VacuumMap({
                 draggable={false}
               />
 
-              {/* Charger/dock marker - always visible when position available */}
               {showChargerMarker && (
                 <ChargerMarker
                   position={chargerPosition}
@@ -234,7 +232,6 @@ export function VacuumMap({
                 />
               )}
 
-              {/* Vacuum position marker - shows current robot location */}
               {showVacuumMarker && (
                 <VacuumPositionMarker
                   position={vacuumPosition}
@@ -242,6 +239,15 @@ export function VacuumMap({
                   imageWidth={imageDimensions.width}
                   imageHeight={imageDimensions.height}
                   isCleaning={isCleaning}
+                />
+              )}
+
+              {showRoomLabels && (
+                <RoomLabels
+                  rooms={parsedRooms}
+                  calibrationPoints={calibrationPoints}
+                  imageWidth={imageDimensions.width}
+                  imageHeight={imageDimensions.height}
                 />
               )}
 
