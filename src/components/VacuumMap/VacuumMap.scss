@@ -7,6 +7,11 @@
 // without scrolling.
 $landscape-reserved: 450px;
 
+// Never let the reserved space collapse the map on short landscape viewports
+// (e.g. phones held sideways, where 100dvh < the reserve): floor the map at a
+// usable height and accept page scrolling instead.
+$landscape-map-floor: 15rem;
+
 .vacuum-map {
   position: relative;
   margin: 0 1.25rem;
@@ -19,12 +24,13 @@ $landscape-reserved: 450px;
   // Landscape orientation: constrain map height to fit within viewport
   // This prevents scrolling on tablets/displays in landscape mode
   @media (orientation: landscape) {
-    max-height: calc(100vh - #{$landscape-reserved});
-    max-height: calc(100dvh - #{$landscape-reserved}); // Use dynamic viewport height where supported
-    min-height: min(
-      15rem,
-      calc(100vh - #{$landscape-reserved})
-    ); // Don't enforce min-height larger than available space
+    max-height: max(#{$landscape-map-floor}, calc(100vh - #{$landscape-reserved}));
+    max-height: max(
+      #{$landscape-map-floor},
+      calc(100dvh - #{$landscape-reserved})
+    ); // Use dynamic viewport height where supported
+
+    min-height: $landscape-map-floor;
   }
 
   // Locked state: allow page scrolling through the map
@@ -52,8 +58,8 @@ $landscape-reserved: 450px;
       min-width: 0;
       min-height: 0;
       max-width: 100%;
-      max-height: calc(100vh - #{$landscape-reserved});
-      max-height: calc(100dvh - #{$landscape-reserved});
+      max-height: max(#{$landscape-map-floor}, calc(100vh - #{$landscape-reserved}));
+      max-height: max(#{$landscape-map-floor}, calc(100dvh - #{$landscape-reserved}));
       aspect-ratio: var(--map-aspect-ratio, auto);
     }
   }
