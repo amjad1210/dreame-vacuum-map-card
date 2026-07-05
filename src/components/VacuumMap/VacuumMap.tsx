@@ -174,7 +174,10 @@ export function VacuumMap({
     <div className={mapClassName} ref={mapRef}>
       {mapEntity && mapUrl ? (
         <TransformWrapper
-          initialScale={1}
+          // initialScale is only read on mount; key remounts the wrapper when
+          // default_zoom changes so card-editor previews update live
+          key={config.default_zoom ?? 1}
+          initialScale={config.default_zoom ?? 1}
           minScale={0.5}
           maxScale={4}
           centerOnInit={true}
@@ -217,7 +220,17 @@ export function VacuumMap({
               justifyContent: 'center',
             }}
           >
-            <div className="vacuum-map__content" ref={contentRef}>
+            <div
+              className="vacuum-map__content"
+              ref={contentRef}
+              style={
+                hasDimensions
+                  ? ({
+                      '--map-aspect-ratio': `${imageDimensions.width} / ${imageDimensions.height}`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
+            >
               <img
                 src={hass.hassUrl(mapUrl)}
                 alt="Vacuum Map"

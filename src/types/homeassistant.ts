@@ -62,6 +62,7 @@ export interface HassConfig {
   language?: 'en' | 'de' | 'ru' | 'pl' | 'it' | 'nl' | 'es' | 'zh' | 'he' | 'fr_FR' | 'ko';
   default_mode?: CleaningSelectionMode;
   default_room_view?: RoomViewMode;
+  default_zoom?: number;
   buttons?: ButtonConfig[];
   map_overlays?: MapOverlay[];
 }

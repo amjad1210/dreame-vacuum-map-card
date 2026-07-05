@@ -92,6 +92,7 @@ theme: light # Optional, 'light' (default), 'dark', or 'custom'
 language: en # Optional, 'en' (default) or 'de'
 default_mode: all # Optional, 'all' (default), 'room', or 'zone'
 default_room_view: map # Optional, 'map' (default) or 'list'
+default_zoom: 1 # Optional, initial map zoom between 0.5 and 4 (default 1); zoom reset/lock returns to this value
 map_overlays: # Experimental Optional, list of overlays to show on the map
   - room_labels # Show room names
   - vacuum # Show vacuum position marker

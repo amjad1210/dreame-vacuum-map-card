@@ -99,7 +99,9 @@ export const configSchema = z.object({
   language: z.enum(['en', 'de', 'ru', 'pl', 'it', 'nl', 'es', 'zh', 'he', 'fr_FR', 'ko']).optional(),
   default_mode: z.enum(['room', 'all', 'zone']).optional(),
   default_room_view: z.enum(['map', 'list']).optional(),
+  default_zoom: z.number().min(0.5).max(4).optional(),
   buttons: z.array(buttonConfigSchema).optional(),
+  map_overlays: z.array(z.enum(['vacuum', 'charger', 'room_labels'])).optional(),
 });
 
 export type ValidatedConfig = z.infer<typeof configSchema>;

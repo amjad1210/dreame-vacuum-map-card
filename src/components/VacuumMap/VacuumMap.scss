@@ -1,5 +1,12 @@
 @use '../../styles/rtl' as *;
 
+// Vertical space reserved around the map in landscape mode, measured from a
+// rendered card: HA chrome (~72px) + everything the card shows above/below
+// the map — header, mode tabs, cleaning-mode row, action buttons, gaps
+// (~360px) — plus a small buffer. Keeps the action buttons on screen
+// without scrolling.
+$landscape-reserved: 450px;
+
 .vacuum-map {
   position: relative;
   margin: 0 1.25rem;
@@ -11,11 +18,13 @@
 
   // Landscape orientation: constrain map height to fit within viewport
   // This prevents scrolling on tablets/displays in landscape mode
-  // 280px accounts for: header (~80px) + controls (~150px) + padding (~50px)
   @media (orientation: landscape) {
-    max-height: calc(100vh - 280px);
-    max-height: calc(100dvh - 280px); // Use dynamic viewport height where supported
-    min-height: min(18.75rem, calc(100vh - 280px)); // Don't enforce min-height larger than available space
+    max-height: calc(100vh - #{$landscape-reserved});
+    max-height: calc(100dvh - #{$landscape-reserved}); // Use dynamic viewport height where supported
+    min-height: min(
+      15rem,
+      calc(100vh - #{$landscape-reserved})
+    ); // Don't enforce min-height larger than available space
   }
 
   // Locked state: allow page scrolling through the map
@@ -31,6 +40,22 @@
     display: inline-block;
     width: 100%;
     height: 100%;
+
+    // Landscape: shrink the content box to fit inside the height-capped
+    // container instead of overflowing at full card width and getting
+    // cropped (which reads as "zoomed in"). --map-aspect-ratio mirrors the
+    // image's natural aspect so the content box always matches the image
+    // exactly and the absolutely-positioned SVG overlays stay aligned.
+    @media (orientation: landscape) {
+      width: auto;
+      height: auto;
+      min-width: 0;
+      min-height: 0;
+      max-width: 100%;
+      max-height: calc(100vh - #{$landscape-reserved});
+      max-height: calc(100dvh - #{$landscape-reserved});
+      aspect-ratio: var(--map-aspect-ratio, auto);
+    }
   }
 
   &__image {
@@ -40,6 +65,12 @@
     border-radius: 0.9375rem;
     user-select: none;
     -webkit-user-drag: none;
+
+    // Landscape: fill the aspect-ratio-fitted content box exactly
+    @media (orientation: landscape) {
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   // Dark mode filter for map image
