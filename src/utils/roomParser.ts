@@ -157,13 +157,40 @@ export function vacuumToMapCoordinates(
   const p2 = effectiveCalibration[1];
   const p3 = effectiveCalibration[2];
 
-  const scaleX = (p2.map.x - p1.map.x) / (p2.vacuum.x - p1.vacuum.x || 1);
-  const scaleY = (p3.map.y - p1.map.y) / (p3.vacuum.y - p1.vacuum.y || 1);
+  // Solve the full 2D affine transform from the three calibration point
+  // pairs. Rotated maps (rotation is baked into the calibration points the
+  // integration publishes) put the p2/p3 deltas on the OTHER image axis, so
+  // per-axis scaling alone collapses every position onto p1.
+  const dx1 = p2.vacuum.x - p1.vacuum.x;
+  const dy1 = p2.vacuum.y - p1.vacuum.y;
+  const dx2 = p3.vacuum.x - p1.vacuum.x;
+  const dy2 = p3.vacuum.y - p1.vacuum.y;
+  const det = dx1 * dy2 - dx2 * dy1;
 
-  const x = p1.map.x + (vacuumX - p1.vacuum.x) * scaleX;
-  const y = p1.map.y + (vacuumY - p1.vacuum.y) * scaleY;
+  if (Math.abs(det) < 1e-9) {
+    logger.warn('RoomParser', 'Degenerate calibration points, cannot solve transform');
+    const normalizedX = (vacuumX + VACUUM_COORD_OFFSET) / VACUUM_COORD_RANGE;
+    const normalizedY = (vacuumY + VACUUM_COORD_OFFSET) / VACUUM_COORD_RANGE;
+    return { x: normalizedX * imageWidth, y: normalizedY * imageHeight };
+  }
 
-  return { x, y };
+  const u1 = p2.map.x - p1.map.x;
+  const u2 = p3.map.x - p1.map.x;
+  const v1 = p2.map.y - p1.map.y;
+  const v2 = p3.map.y - p1.map.y;
+
+  const a = (u1 * dy2 - u2 * dy1) / det;
+  const b = (u2 * dx1 - u1 * dx2) / det;
+  const c = (v1 * dy2 - v2 * dy1) / det;
+  const d = (v2 * dx1 - v1 * dx2) / det;
+
+  const relX = vacuumX - p1.vacuum.x;
+  const relY = vacuumY - p1.vacuum.y;
+
+  return {
+    x: p1.map.x + a * relX + b * relY,
+    y: p1.map.y + c * relX + d * relY,
+  };
 }
 
 export function createRoomPath(

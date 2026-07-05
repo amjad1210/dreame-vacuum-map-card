@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { Room, CalibrationPoint } from '@/types/homeassistant';
-import { vacuumToMapCoordinates } from '@/utils/roomParser';
+import { vacuumToMapCoordinates, type MapRotation } from '@/utils/roomParser';
 import './RoomLabels.scss';
 
 interface RoomLabelsProps {
@@ -8,9 +8,10 @@ interface RoomLabelsProps {
   calibrationPoints: CalibrationPoint[];
   imageWidth: number;
   imageHeight: number;
+  rotation?: MapRotation;
 }
 
-export function RoomLabels({ rooms, calibrationPoints, imageWidth, imageHeight }: RoomLabelsProps) {
+export function RoomLabels({ rooms, calibrationPoints, imageWidth, imageHeight, rotation = 0 }: RoomLabelsProps) {
   const fontSize = Math.max(imageWidth, imageHeight) * 0.025;
   const paddingX = fontSize * 0.6;
   const paddingY = fontSize * 0.4;
@@ -28,10 +29,18 @@ export function RoomLabels({ rooms, calibrationPoints, imageWidth, imageHeight }
       .map((room) => {
         const centerX = room.x ?? (room.x0! + room.x1!) / 2;
         const centerY = room.y ?? (room.y0! + room.y1!) / 2;
-        const pos = vacuumToMapCoordinates(centerX, centerY, calibrationPoints, imageWidth, imageHeight);
+        const pos = vacuumToMapCoordinates(
+          centerX,
+          centerY,
+          calibrationPoints,
+          imageWidth,
+          imageHeight,
+          rooms,
+          rotation
+        );
         return { id: room.id, name: room.name, x: pos.x, y: pos.y };
       });
-  }, [rooms, calibrationPoints, imageWidth, imageHeight]);
+  }, [rooms, calibrationPoints, imageWidth, imageHeight, rotation]);
 
   return (
     <svg className="room-labels" viewBox={`0 0 ${imageWidth} ${imageHeight}`} preserveAspectRatio="xMidYMid meet">

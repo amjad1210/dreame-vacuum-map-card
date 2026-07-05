@@ -245,6 +245,8 @@ export function VacuumMap({
                   calibrationPoints={calibrationPoints}
                   imageWidth={imageDimensions.width}
                   imageHeight={imageDimensions.height}
+                  rooms={parsedRooms}
+                  rotation={mapRotation}
                 />
               )}
 
@@ -255,6 +257,8 @@ export function VacuumMap({
                   imageWidth={imageDimensions.width}
                   imageHeight={imageDimensions.height}
                   isCleaning={isCleaning}
+                  rooms={parsedRooms}
+                  rotation={mapRotation}
                 />
               )}
 
@@ -264,6 +268,7 @@ export function VacuumMap({
                   calibrationPoints={calibrationPoints}
                   imageWidth={imageDimensions.width}
                   imageHeight={imageDimensions.height}
+                  rotation={mapRotation}
                 />
               )}
 

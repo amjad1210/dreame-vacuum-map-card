@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { VacuumPosition, CalibrationPoint } from '@/types/homeassistant';
-import { vacuumToMapCoordinates } from '@/utils/roomParser';
+import type { VacuumPosition, CalibrationPoint, Room } from '@/types/homeassistant';
+import { vacuumToMapCoordinates, type MapRotation } from '@/utils/roomParser';
 import './VacuumPositionMarker.scss';
 
 // MDI battery-charging icon path (viewBox 0 0 24 24)
@@ -12,16 +12,25 @@ interface ChargerMarkerProps {
   calibrationPoints: CalibrationPoint[];
   imageWidth: number;
   imageHeight: number;
+  rooms?: Room[];
+  rotation?: MapRotation;
 }
 
 /**
  * Renders a charging dock marker on the map
  * Uses SVG with viewBox to scale properly with the map image
  */
-export function ChargerMarker({ position, calibrationPoints, imageWidth, imageHeight }: ChargerMarkerProps) {
+export function ChargerMarker({
+  position,
+  calibrationPoints,
+  imageWidth,
+  imageHeight,
+  rooms,
+  rotation = 0,
+}: ChargerMarkerProps) {
   const mapPosition = useMemo(() => {
-    return vacuumToMapCoordinates(position.x, position.y, calibrationPoints, imageWidth, imageHeight);
-  }, [position.x, position.y, calibrationPoints, imageWidth, imageHeight]);
+    return vacuumToMapCoordinates(position.x, position.y, calibrationPoints, imageWidth, imageHeight, rooms, rotation);
+  }, [position.x, position.y, calibrationPoints, imageWidth, imageHeight, rooms, rotation]);
 
   // Size of the marker relative to the map (the icon is 24x24 in its viewBox)
   const iconSize = Math.max(imageWidth, imageHeight) * 0.04; // 4% of map size
